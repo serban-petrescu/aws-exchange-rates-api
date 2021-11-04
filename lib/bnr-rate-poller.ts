@@ -2,6 +2,7 @@ import { Rule, Schedule } from '@aws-cdk/aws-events';
 import { LambdaFunction } from '@aws-cdk/aws-events-targets';
 import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import { Construct, Duration } from '@aws-cdk/core';
+import { join } from 'path';
 import { Storage } from './storage';
 
 export interface BnrRatePollerProps {
@@ -13,6 +14,7 @@ export class BnrRatePoller extends Construct {
         super(scope, id);
 
         const poller = new NodejsFunction(this, 'Poller', {
+            entry: join(__dirname, 'bnr-rate-poller.lambda.ts'),
             timeout: Duration.seconds(30),
             environment: {
                 STORAGE_TABLE_NAME: props.storage.table.tableName,

@@ -2,6 +2,7 @@ import { Construct } from '@aws-cdk/core';
 import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import { ApiKeySourceType, IRestApi, LambdaRestApi } from '@aws-cdk/aws-apigateway';
 import { Storage } from './storage';
+import { join } from 'path';
 
 interface PublicApiProps {
     storage: Storage;
@@ -14,6 +15,7 @@ export class PublicApi extends Construct {
         super(scope, id);
 
         const backend = new NodejsFunction(this, 'Backend', {
+            entry: join(__dirname, 'public-api.lambda.ts'),
             environment: {
                 STORAGE_TABLE_NAME: props.storage.table.tableName,
             },
