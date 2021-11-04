@@ -1,0 +1,91 @@
+{
+    "ModelName": "Rates",
+    "ModelMetadata": {
+        "Author": "Serban Petrescu",
+        "DateCreated": "Nov 01, 2021, 08:43 AM",
+        "DateLastModified": "Nov 01, 2021, 08:48 AM",
+        "Description": "",
+        "AWSService": "Amazon DynamoDB",
+        "Version": "3.0"
+    },
+    "DataModel": [
+        {
+            "TableName": "table",
+            "KeyAttributes": {
+                "PartitionKey": {
+                    "AttributeName": "Pk",
+                    "AttributeType": "S"
+                },
+                "SortKey": {
+                    "AttributeName": "Sk",
+                    "AttributeType": "S"
+                }
+            },
+            "NonKeyAttributes": [
+                {
+                    "AttributeName": "FromCurrency",
+                    "AttributeType": "S"
+                },
+                {
+                    "AttributeName": "ToCurrency",
+                    "AttributeType": "S"
+                },
+                {
+                    "AttributeName": "Date",
+                    "AttributeType": "S"
+                },
+                {
+                    "AttributeName": "Type",
+                    "AttributeType": "S"
+                },
+                {
+                    "AttributeName": "Rate",
+                    "AttributeType": "N"
+                }
+            ],
+            "TableFacets": [
+                {
+                    "FacetName": "DirectRate",
+                    "KeyAttributeAlias": {
+                        "PartitionKeyAlias": "Pk",
+                        "SortKeyAlias": "Sk"
+                    },
+                    "TableData": [],
+                    "NonKeyAttributes": ["FromCurrency", "ToCurrency", "Date", "Type", "Rate"],
+                    "DataAccess": {
+                        "MySql": {}
+                    }
+                }
+            ],
+            "TableData": [
+                {
+                    "Pk": {
+                        "S": "DirectRate#2021-11-01#RON"
+                    },
+                    "Sk": {
+                        "S": "Currency#USD"
+                    },
+                    "FromCurrency": {
+                        "S": "RON"
+                    },
+                    "ToCurrency": {
+                        "S": "USD"
+                    },
+                    "Date": {
+                        "S": "2021-11-01"
+                    },
+                    "Type": {
+                        "S": "DirectRate"
+                    },
+                    "Rate": {
+                        "N": 123.12
+                    }
+                }
+            ],
+            "DataAccess": {
+                "MySql": {}
+            },
+            "BillingMode": "PAY_PER_REQUEST"
+        }
+    ]
+}

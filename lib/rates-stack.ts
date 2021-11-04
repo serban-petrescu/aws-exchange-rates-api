@@ -1,9 +1,14 @@
-import * as cdk from '@aws-cdk/core';
+import { Construct, Stack, StackProps } from '@aws-cdk/core';
+import { BnrRatePoller } from './bnr-rate-poller';
+import { PublicApi } from './public-api';
+import { Storage } from './storage';
 
-export class RatesStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+export class RatesStack extends Stack {
+    constructor(scope: Construct, id: string, props?: StackProps) {
+        super(scope, id, props);
 
-    // The code that defines your stack goes here
-  }
+        const storage = new Storage(this, 'Storage', {});
+        new PublicApi(this, 'Api', { storage });
+        new BnrRatePoller(this, 'Poller', { storage });
+    }
 }
