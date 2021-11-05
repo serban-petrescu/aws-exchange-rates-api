@@ -8,10 +8,10 @@ const repo = new RateRepository();
 const app = api();
 
 app.get('/dates/:date/rates', async function (request, response) {
-    const date = request.params.date;
-    const { from, to } = request.query;
+    const { date = '' } = request.params;
+    const { from = '', to = '' } = request.query;
     try {
-        const rate = await repo.getDirectRate(date || '', from || '', to || '');
+        const rate = await repo.getDirectRate(date, from, to);
         response.type('text');
         response.send(rate + '');
         logger.info(`Read rate for ${date} from ${from} to ${to}.`);
