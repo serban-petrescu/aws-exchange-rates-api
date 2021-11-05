@@ -16,6 +16,7 @@ export class PublicApi extends Construct {
 
         const backend = new NodejsFunction(this, 'Backend', {
             entry: join(__dirname, 'public-api.lambda.ts'),
+            bundling: { metafile: true },
             environment: {
                 STORAGE_TABLE_NAME: props.storage.table.tableName,
             },

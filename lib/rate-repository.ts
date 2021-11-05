@@ -38,7 +38,7 @@ export class RateRepository {
 
     public async saveDirectRates(rates: DirectRate[]): Promise<void> {
         for (let i = 0; i < rates.length; i += BATCH_WRITE_MAX_SIZE) {
-            await ddb
+            const response = await ddb
                 .batchWrite({
                     RequestItems: {
                         [this.table]: rates.slice(i, i + BATCH_WRITE_MAX_SIZE).map((rate) => ({
@@ -49,6 +49,9 @@ export class RateRepository {
                     },
                 })
                 .promise();
+            if (response.UnprocessedItems?.[this.table]?.length) {
+                rates.push(...response.UnprocessedItems[this.table].map((item) => item.PutRequest?.Item as DirectRate));
+            }
         }
     }
 

@@ -1,6 +1,9 @@
-import axios from 'axios';
+import getLogger from 'pino-lambda';
+import fetch from 'node-fetch';
 import { parse } from 'fast-xml-parser';
 import { directRate, RateRepository } from './rate-repository';
+
+const logger = getLogger();
 
 const BRN_URL = 'https://www.bnr.ro/nbrfxrates.xml';
 
@@ -24,16 +27,22 @@ interface BnrResponseBody {
 }
 
 async function callBnr(): Promise<BnrResponseBody> {
-    const response = (await (await axios.get(BRN_URL, { responseType: 'text' })).data) as string;
-    const parsed = parse(response, {
-        parseNodeValue: true,
-        textNodeName: 'value',
-        parseAttributeValue: true,
-        ignoreAttributes: false,
-        attributeNamePrefix: '',
-        ignoreNameSpace: true,
-    }) as BnrResponse;
-    return parsed.DataSet.Body;
+    try {
+        const response = await (await fetch(BRN_URL)).text();
+        const parsed = parse(response, {
+            parseNodeValue: true,
+            textNodeName: 'value',
+            parseAttributeValue: true,
+            ignoreAttributes: false,
+            attributeNamePrefix: '',
+            ignoreNameSpace: true,
+        }) as BnrResponse;
+        logger.info('Successfully loaded rate data from BNR.');
+        return parsed.DataSet.Body;
+    } catch (e) {
+        logger.error('Unable to load rate data from BNR.', e);
+        throw e;
+    }
 }
 
 const INTERESTING_CURRENCIES = ['USD', 'EUR'];
@@ -42,11 +51,11 @@ export async function handler(): Promise<void> {
     const bnr = await callBnr();
     const from = bnr.OrigCurrency;
     const cubes = 'length' in bnr.Cube ? bnr.Cube : [bnr.Cube];
-    await new RateRepository().saveDirectRates(
-        cubes.flatMap((cube) =>
-            cube.Rate.filter((rate) => INTERESTING_CURRENCIES.includes(rate.currency)).map((rate) =>
-                directRate({ Date: cube.date, FromCurrency: from, ToCurrency: rate.currency, Rate: rate.value })
-            )
+    const rates = cubes.flatMap((cube) =>
+        cube.Rate.filter((rate) => INTERESTING_CURRENCIES.includes(rate.currency)).map((rate) =>
+            directRate({ Date: cube.date, FromCurrency: from, ToCurrency: rate.currency, Rate: rate.value })
         )
     );
+    await new RateRepository().saveDirectRates(rates);
+    logger.info(`Successfully saved ${rates.length} rates in the DB.`);
 }

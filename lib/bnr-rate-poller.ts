@@ -15,6 +15,7 @@ export class BnrRatePoller extends Construct {
 
         const poller = new NodejsFunction(this, 'Poller', {
             entry: join(__dirname, 'bnr-rate-poller.lambda.ts'),
+            bundling: { metafile: true },
             timeout: Duration.seconds(30),
             environment: {
                 STORAGE_TABLE_NAME: props.storage.table.tableName,

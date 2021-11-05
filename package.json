@@ -11,7 +11,6 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.85",
-    "@types/express": "^4.17.13",
     "@types/node": "10.17.27",
     "aws-cdk": "1.130.0",
     "esbuild": "^0.13.12",
@@ -27,11 +26,12 @@
     "@aws-cdk/aws-lambda": "1.130.0",
     "@aws-cdk/aws-lambda-nodejs": "1.130.0",
     "@aws-cdk/core": "1.130.0",
-    "@vendia/serverless-express": "^4.5.2",
-    "aws-sdk": "^2.1019.0",
-    "axios": "^0.24.0",
-    "express": "^4.17.1",
+    "aws-sdk": "^2.1022.0",
     "fast-xml-parser": "^3.21.1",
+    "lambda-api": "^0.11.2",
+    "node-fetch": "^3.0.0",
+    "pino": "^7.1.0",
+    "pino-lambda": "^3.0.0",
     "source-map-support": "^0.5.16"
   }
 }
