@@ -24,7 +24,7 @@ export class BnrRatePoller extends Construct {
         props.storage.table.grantWriteData(poller);
 
         new Rule(this, 'Schedule', {
-            schedule: Schedule.cron({ hour: '12' }),
+            schedule: Schedule.cron({ hour: '12', minute: '0' }),
             targets: [new LambdaFunction(poller)],
         });
     }
