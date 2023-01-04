@@ -1,12 +1,10 @@
-import { Construct } from '@aws-cdk/core';
-import { Table, AttributeType, BillingMode } from '@aws-cdk/aws-dynamodb';
-
-interface StorageProps {}
+import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
+import { Construct } from 'constructs';
 
 export class Storage extends Construct {
     public readonly table: Table;
 
-    constructor(scope: Construct, id: string, props: StorageProps) {
+    constructor(scope: Construct, id: string) {
         super(scope, id);
 
         this.table = new Table(this, 'Table', {

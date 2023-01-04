@@ -1,8 +1,10 @@
 import api from 'lambda-api';
-import getLogger from 'pino-lambda';
+import pino from 'pino';
+import { pinoLambdaDestination } from 'pino-lambda';
+
 import { NotFoundError, RateRepository } from './rate-repository';
 
-const logger = getLogger();
+const logger = pino({}, pinoLambdaDestination());
 const repo = new RateRepository();
 
 const app = api();

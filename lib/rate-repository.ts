@@ -4,18 +4,18 @@ const ddb = new DynamoDB.DocumentClient();
 
 export class NotFoundError extends Error {}
 
-export interface DirectRateInput {
+export type DirectRateInput = {
     FromCurrency: string;
     ToCurrency: string;
     Date: string;
     Rate: number;
-}
+};
 
-export interface DirectRate extends DirectRateInput {
+export type DirectRate = {
     Pk: string;
     Sk: string;
     Type: 'DirectRate';
-}
+} & DirectRateInput;
 
 export function directRate(input: DirectRateInput): DirectRate {
     return {

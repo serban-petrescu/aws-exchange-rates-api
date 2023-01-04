@@ -1,30 +1,32 @@
-import getLogger from 'pino-lambda';
-import fetch from 'node-fetch';
 import { parse } from 'fast-xml-parser';
+import fetch from 'node-fetch';
+import pino from 'pino';
+import { pinoLambdaDestination } from 'pino-lambda';
+
 import { directRate, RateRepository } from './rate-repository';
 
-const logger = getLogger();
+const logger = pino({}, pinoLambdaDestination());
 
 const BRN_URL = 'https://www.bnr.ro/nbrfxrates.xml';
 
-interface Cube {
+type Cube = {
     date: string;
     Rate: {
         currency: string;
         value: number;
     }[];
-}
+};
 
-interface BnrResponse {
+type BnrResponse = {
     DataSet: {
         Body: BnrResponseBody;
     };
-}
+};
 
-interface BnrResponseBody {
+type BnrResponseBody = {
     OrigCurrency: string;
     Cube: Cube | Cube[];
-}
+};
 
 async function callBnr(): Promise<BnrResponseBody> {
     try {

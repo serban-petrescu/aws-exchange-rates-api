@@ -1,37 +1,39 @@
 {
-  "name": "rates",
-  "version": "0.1.0",
-  "bin": {
-    "rates": "bin/rates.js"
-  },
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "cdk": "cdk"
-  },
-  "devDependencies": {
-    "@types/aws-lambda": "^8.10.85",
-    "@types/node": "10.17.27",
-    "aws-cdk": "1.130.0",
-    "esbuild": "^0.13.12",
-    "prettier": "^2.4.1",
-    "ts-node": "^9.0.0",
-    "typescript": "~3.9.7"
-  },
-  "dependencies": {
-    "@aws-cdk/aws-apigateway": "1.130.0",
-    "@aws-cdk/aws-dynamodb": "1.130.0",
-    "@aws-cdk/aws-events": "1.130.0",
-    "@aws-cdk/aws-events-targets": "1.130.0",
-    "@aws-cdk/aws-lambda": "1.130.0",
-    "@aws-cdk/aws-lambda-nodejs": "1.130.0",
-    "@aws-cdk/core": "1.130.0",
-    "aws-sdk": "^2.1022.0",
-    "fast-xml-parser": "^3.21.1",
-    "lambda-api": "^0.11.2",
-    "node-fetch": "^3.0.0",
-    "pino": "^7.1.0",
-    "pino-lambda": "^3.0.0",
-    "source-map-support": "^0.5.16"
-  }
+    "name": "rates",
+    "version": "0.1.0",
+    "bin": {
+        "rates": "bin/rates.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc -w",
+        "cdk": "cdk"
+    },
+    "devDependencies": {
+        "@types/aws-lambda": "8.10.85",
+        "@types/node": "10.17.27",
+        "@typescript-eslint/eslint-plugin": "5.47.1",
+        "@typescript-eslint/parser": "5.47.1",
+        "aws-cdk": "2.59.0",
+        "aws-sdk": "2.1022.0",
+        "esbuild": "0.13.12",
+        "eslint": "8.30.0",
+        "eslint-config-prettier": "8.5.0",
+        "eslint-plugin-editorconfig": "4.0.2",
+        "eslint-plugin-prettier": "4.2.1",
+        "eslint-plugin-simple-import-sort": "8.0.0",
+        "prettier": "2.8.1",
+        "ts-node": "9.0.0",
+        "typescript": "3.9.7"
+    },
+    "dependencies": {
+        "aws-cdk-lib": "2.59.0",
+        "constructs": "10.0.0",
+        "fast-xml-parser": "3.21.1",
+        "lambda-api": "0.11.2",
+        "node-fetch": "^3.3.0",
+        "pino": "7.1.0",
+        "pino-lambda": "4.1.0",
+        "source-map-support": "0.5.16"
+    }
 }

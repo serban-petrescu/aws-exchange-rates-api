@@ -1,13 +1,15 @@
-import { Rule, Schedule } from '@aws-cdk/aws-events';
-import { LambdaFunction } from '@aws-cdk/aws-events-targets';
-import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
-import { Construct, Duration } from '@aws-cdk/core';
+import { Duration } from 'aws-cdk-lib';
+import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
+import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Construct } from 'constructs';
 import { join } from 'path';
-import { Storage } from './storage';
 
-export interface BnrRatePollerProps {
+import type { Storage } from './storage';
+
+export type BnrRatePollerProps = {
     storage: Storage;
-}
+};
 
 export class BnrRatePoller extends Construct {
     constructor(scope: Construct, id: string, props: BnrRatePollerProps) {

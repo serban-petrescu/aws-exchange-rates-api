@@ -1,12 +1,14 @@
-import { Construct } from '@aws-cdk/core';
-import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
-import { ApiKeySourceType, IRestApi, LambdaRestApi } from '@aws-cdk/aws-apigateway';
-import { Storage } from './storage';
+import type { IRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { ApiKeySourceType, LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Construct } from 'constructs';
 import { join } from 'path';
 
-interface PublicApiProps {
+import type { Storage } from './storage';
+
+type PublicApiProps = {
     storage: Storage;
-}
+};
 
 export class PublicApi extends Construct {
     public readonly api: IRestApi;
